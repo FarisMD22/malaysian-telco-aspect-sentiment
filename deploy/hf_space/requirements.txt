@@ -1,0 +1,9 @@
+# HF Space deps. Gradio is provisioned by the Space from its SDK (no sdk_version pin in README.md
+# -> the Space uses the current Gradio, which is built against HF's modern dependency image).
+# We therefore leave transformers / huggingface_hub UNPINNED so pip resolves a set consistent with
+# that Gradio. (Pinning old Gradio 4.44.1 caused a cascade of stdlib/dep clashes: audioop on
+# Python 3.13, HfFolder removed in huggingface_hub 1.0, and a jinja2/starlette template error.)
+# python_version 3.12 is kept in README.md as a belt-and-braces guard against the 3.13 audioop issue.
+transformers
+torch
+langdetect

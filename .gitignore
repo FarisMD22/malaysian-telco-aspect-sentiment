@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+
+# Trained models and large binaries (regenerate by running the pipeline)
+models/*
+!models/.gitkeep
+*.safetensors
+*.bin
+*.pkl
+
+# Editor / OS
+.idea/
+.vscode/
+.DS_Store
+.ipynb_checkpoints/
+~$*
+*.log

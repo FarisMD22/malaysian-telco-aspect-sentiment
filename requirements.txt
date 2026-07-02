@@ -1,0 +1,24 @@
+google-play-scraper>=1.2.0
+praw>=7.7.0
+beautifulsoup4>=4.12.0
+requests>=2.31.0
+playwright>=1.40.0          # Trustpilot now behind AWS WAF JS challenge; needs headless browser
+                            # after install run: python -m playwright install chromium
+lxml>=4.9.0
+python-dotenv>=1.0.0
+langdetect>=1.0.9
+emoji>=2.8.0
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+transformers>=4.35.0
+torch>=2.0.0
+accelerate>=0.24.0
+datasets>=2.14.0
+gradio>=4.0.0
+tqdm>=4.66.0
+tables>=3.9.0
+deep-translator>=1.11.0
+joblib>=1.3.0
+matplotlib>=3.7.0           # aspect-degradation heatmaps (src/aspect_degradation.py); import is guarded
+nltk>=3.8.0                 # Porter stemming for the baseline stemming ablation (src/ablation_stemming.py)

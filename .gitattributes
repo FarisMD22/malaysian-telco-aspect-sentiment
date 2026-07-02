@@ -1,0 +1,11 @@
+# Normalize text line endings; mark binary assets so Git doesn't touch them.
+* text=auto
+
+*.png  binary
+*.pdf  binary
+*.h5   binary
+*.hdf5 binary
+*.pkl  binary
+*.bin  binary
+*.safetensors binary
+*.xlsx binary
