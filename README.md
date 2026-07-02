@@ -74,10 +74,10 @@ python src/aspect_degradation.py   # per-aspect degradation + heatmaps
 | `src/` | Pipeline: preprocessing, baseline, transformer fine-tune, aspect extractor, evaluation, degradation experiment, ablations |
 | `scrapers/` | Data collection (Google Play, Reddit, Trustpilot, Lowyat) |
 | `app/` | Local launcher for the Gradio web application |
-| `deploy/` | Hugging Face Spaces deployment (`hf_space/`) and `DEPLOY.md` |
+| `deploy/` | Hugging Face Spaces deployment (`hf_space/`) and `deploy/DEPLOY.md` |
 | `notebooks/` | Colab notebook for GPU fine-tuning |
 | `labeling/` | Labelling rubric and agreement (κ) tooling |
-| `data/` | `labeled/` (used for training/evaluation), plus `raw/` and `cleaned/`; `DATASET_SUMMARY.md` describes the dataset |
+| `data/` | `labeled/` (used for training/evaluation), plus `raw/` and `cleaned/`; `data/DATASET_SUMMARY.md` describes the dataset |
 | `models/` | Output directory for trained models and result files (generated) |
 | `UserManual.pdf` | Full user manual |
 
