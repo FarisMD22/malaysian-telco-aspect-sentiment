@@ -1,7 +1,6 @@
 # Dataset Summary — Malaysian Telco & Broadband Sentiment
 
 **TNL6323 Natural Language Processing · Group Project (40%)**
-**Prepared: 16 June 2026**
 
 This is a one-page overview of the data collected for our Malaysia-focused telco &
 broadband sentiment analysis system. It covers what we gathered, from where, how it
@@ -113,13 +112,13 @@ keyword-rule extractor (`labeled_main_with_aspects.csv`). The five aspects are:
 
 ---
 
-## 7. Status and next steps
+## 7. Status
 
-- **Complete:** all three sources collected; Play Store cleaned and labelled; balanced
-  1,200-row training set built; baseline models trained; aspects extracted.
-- **In progress (this week):** merge Trustpilot + Lowyat into the corpus, build the two
-  60-row evaluation samples, and run the manual double-labelling sprint (with Cohen's κ
-  inter-annotator agreement) for the cross-platform and cross-domain tiers.
+All three sources are collected; Play Store is cleaned and labelled; the balanced 1,200-row
+training set is built; baseline models are trained; and aspects are extracted. The two 60-row
+evaluation samples (Trustpilot cross-platform, Lowyat cross-domain) are labelled by a single
+annotator per `labeling/rubric.md`; Trustpilot additionally reports a human-vs-star proxy
+agreement (see `data/labeled/kappa.md`).
 
 ---
 

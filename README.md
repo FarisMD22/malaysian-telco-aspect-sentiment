@@ -76,7 +76,7 @@ python src/aspect_degradation.py   # per-aspect degradation + heatmaps
 | `app/` | Local launcher for the Gradio web application |
 | `deploy/` | Hugging Face Spaces deployment (`hf_space/`) and `DEPLOY.md` |
 | `notebooks/` | Colab notebook for GPU fine-tuning |
-| `labeling/` | Labelling rubric and inter-annotator-agreement tooling |
+| `labeling/` | Labelling rubric and agreement (κ) tooling |
 | `data/` | `labeled/` (used for training/evaluation), plus `raw/` and `cleaned/`; `DATASET_SUMMARY.md` describes the dataset |
 | `models/` | Output directory for trained models and result files (generated) |
 | `UserManual.pdf` | Full user manual |

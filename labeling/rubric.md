@@ -1,6 +1,6 @@
 # Labeling Rubric — TNL6323 Project
 
-**Apply this rubric to every item you label.** Consistency across members is how we score a high Cohen's κ.
+**Apply this rubric consistently to every item you label** — consistent application is what keeps the labels reliable.
 
 ## Three labels
 
@@ -31,13 +31,15 @@
 | "Unifi signal kat area aku okay je" | positive | "okay je" = fine/good in Manglish |
 | "Rm50 sebulan too mahal dah" | negative | "mahal" = expensive; pricing complaint |
 
-## For double-labeled eval items
+## Eval-set labeling
 
-Every Trustpilot and Reddit/Lowyat eval item is labeled by **two** members independently. A third member arbitrates disagreements. Track Cohen's κ per tier. Target κ ≥ 0.6.
+The Trustpilot and Reddit/Lowyat eval items are labeled by a single annotator using this rubric.
+For Trustpilot, agreement is checked against a star-derived proxy label — a human-vs-star validity
+check, not inter-annotator agreement; see `data/labeled/kappa.md`. Lowyat has no star proxy.
 
 ## Workflow
 
-1. Open the shared Google Sheet.
-2. Find rows assigned to you. Fill `your_label` using this rubric.
-3. If you disagree with a pre-label or find the text unclear, leave a note in `notes`.
-4. Done labeling? Mark your name in the "finished" tab; κ is then calculated.
+1. Open the eval sheet (`labeling/*_eval_sheet.csv`).
+2. Fill `label_1` for each row using this rubric.
+3. If the text is unclear, leave a note in `notes`.
+4. Run `python labeling/compute_kappa.py` to export the final eval sets and the agreement report.
