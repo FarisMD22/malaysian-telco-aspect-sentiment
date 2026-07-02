@@ -1,5 +1,12 @@
 # Deploying the Gradio app to HuggingFace Spaces
 
+> **✅ Already deployed.** This project is live — you do not need to redeploy to use it:
+> - **App (Space):** https://huggingface.co/spaces/FarisTheCoder/telco-sentiment
+> - **Model repo:** https://huggingface.co/FarisTheCoder/xlmr-telco-sentiment
+>
+> The steps below document how that deployment was produced (and how to reproduce it under a
+> different account, by substituting your own username for `FarisTheCoder`).
+
 The app is `deploy/hf_space/` (app.py + aspect_sa.py + requirements.txt + README.md). The ~1.1 GB
 XLM-R model is **not** bundled into the Space — it lives in a separate HF **model repo** and the
 Space loads it by id at runtime via the `HF_MODEL_ID` variable. This keeps the Space small and fast
@@ -38,7 +45,7 @@ Space → **Settings** → **Variables and secrets** → **New variable** (plain
 the model repo is public):
 ```
 Name:  HF_MODEL_ID
-Value: <your-username>/xlmr-telco-sentiment
+Value: FarisTheCoder/xlmr-telco-sentiment
 ```
 The Space restarts and loads the model. Then jump to **Step 4 — Verify** at the bottom.
 
@@ -56,24 +63,25 @@ The Space restarts and loads the model. Then jump to **Step 4 — Verify** at th
    pip install -U "huggingface_hub[cli]"
    huggingface-cli login        # paste the WRITE token
    ```
-   Replace `<user>` below with your HF username.
+   The commands below use `FarisTheCoder`; substitute your own HF username to reproduce under
+   a different account.
 
 ### B1. Upload the model to a HF model repo (public)
 
 A public model repo means the Space can download it with no runtime token.
 ```powershell
 huggingface-cli repo create xlmr-telco-sentiment --type model -y
-huggingface-cli upload <user>/xlmr-telco-sentiment models/xlmr_final . --repo-type model
+huggingface-cli upload FarisTheCoder/xlmr-telco-sentiment models/xlmr_final . --repo-type model
 ```
 This uploads the contents of local `models/xlmr_final/` (config, `model.safetensors`, tokenizer) to
 the repo root; safetensors is handled via LFS automatically. Verify at
-`https://huggingface.co/<user>/xlmr-telco-sentiment` that `model.safetensors` is present.
+`https://huggingface.co/FarisTheCoder/xlmr-telco-sentiment` that `model.safetensors` is present.
 
 ### B2. Create the Space and push the app
 
 ```powershell
 huggingface-cli repo create telco-sentiment --type space --space_sdk gradio -y
-huggingface-cli upload <user>/telco-sentiment deploy/hf_space . --repo-type space
+huggingface-cli upload FarisTheCoder/telco-sentiment deploy/hf_space . --repo-type space
 ```
 This pushes `app.py`, `aspect_sa.py`, `requirements.txt`, `README.md` to the Space root. The Space
 starts building immediately.
@@ -84,7 +92,7 @@ On the Space page → **Settings** → **Variables and secrets** → **New varia
 is fine since the model repo is public):
 ```
 Name:  HF_MODEL_ID
-Value: <user>/xlmr-telco-sentiment
+Value: FarisTheCoder/xlmr-telco-sentiment
 ```
 The Space restarts and loads the model. (If you instead kept the model repo **private**, add an
 `HF_TOKEN` *secret* with a read token so the Space can download it.)
@@ -93,7 +101,7 @@ The Space restarts and loads the model. (If you instead kept the model repo **pr
 
 ## Step 4 — Verify + capture for the report (both options)
 
-1. Open `https://huggingface.co/spaces/<user>/telco-sentiment`, wait for "Running".
+1. Open `https://huggingface.co/spaces/FarisTheCoder/telco-sentiment`, wait for "Running".
 2. Try the built-in examples (incl. the Manglish one) and confirm sentiment + per-aspect + language
    render.
 3. **Screenshot** the running app for the report's Deployment section, and put the live URL in the
@@ -103,7 +111,7 @@ The Space restarts and loads the model. (If you instead kept the model repo **pr
 
 Re-run only the Space upload (model unchanged):
 ```powershell
-huggingface-cli upload <user>/telco-sentiment deploy/hf_space . --repo-type space
+huggingface-cli upload FarisTheCoder/telco-sentiment deploy/hf_space . --repo-type space
 ```
 
 ## Local run (no deploy)

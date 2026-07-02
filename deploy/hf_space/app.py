@@ -6,11 +6,14 @@ README.md) is exactly what gets pushed to the Space.
 
 Model loading
 -------------
-The fine-tuned XLM-R model (~1.1 GB) is NOT committed into the Space. Instead it lives in a HF
-model repo and is loaded by id at runtime via the HF_MODEL_ID environment variable / Space secret:
-    HF_MODEL_ID = <your-username>/xlmr-telco-sentiment
-Locally (with the model on disk) it falls back to ./models/xlmr_final, so `python deploy/hf_space/app.py`
-works from the repo root for development. See deploy/DEPLOY.md.
+The fine-tuned XLM-R model (~1.1 GB) is NOT committed into the Space. It lives in a public HF
+model repo, FarisTheCoder/xlmr-telco-sentiment, and is resolved at runtime in this priority order:
+    1. HF_MODEL_ID environment variable / Space secret, if set;
+    2. a local ./models/xlmr_final checkout, if present (offline development);
+    3. otherwise the public repo FarisTheCoder/xlmr-telco-sentiment, downloaded from HF on first
+       run (needs internet).
+So `python app/app.py` / `python deploy/hf_space/app.py` works out of the box from the repo root
+with no manual download. See deploy/DEPLOY.md.
 """
 import os
 
@@ -18,7 +21,13 @@ import gradio as gr
 
 from aspect_sa import ASPECTS, extract_aspects, sentences_for_aspect
 
-MODEL_ID = os.environ.get("HF_MODEL_ID", "models/xlmr_final")
+DEFAULT_HF_MODEL_ID = "FarisTheCoder/xlmr-telco-sentiment"
+if os.environ.get("HF_MODEL_ID"):
+    MODEL_ID = os.environ["HF_MODEL_ID"]
+elif os.path.isdir("models/xlmr_final"):
+    MODEL_ID = "models/xlmr_final"
+else:
+    MODEL_ID = DEFAULT_HF_MODEL_ID
 MAX_LEN = 128
 
 # --- language detection (best-effort; langdetect conflates Bahasa Melayu with 'id') ---

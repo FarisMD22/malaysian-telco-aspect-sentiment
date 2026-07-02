@@ -22,6 +22,6 @@ user feedback (Play Store, Trustpilot, forums), in English, Bahasa Melayu and Ma
 
 ## Configuration
 
-The model is loaded at runtime from a HF model repo, set via the **`HF_MODEL_ID`** Space secret
-(e.g. `your-username/xlmr-telco-sentiment`). The ~1.1 GB weights are not committed into this Space.
+The model is loaded at runtime from a HF model repo, set via the **`HF_MODEL_ID`** Space variable
+(`FarisTheCoder/xlmr-telco-sentiment`). The ~1.1 GB weights are not committed into this Space.
 See `deploy/DEPLOY.md` in the project repo for the full upload + deploy steps.

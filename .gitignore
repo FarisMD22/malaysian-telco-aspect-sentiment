@@ -9,12 +9,18 @@ venv/
 env/
 .env
 
-# Trained models and large binaries (regenerate by running the pipeline)
-models/*
-!models/.gitkeep
+# Large model weights are NOT committed (exceed the submission size limit).
+# The ~1.1 GB XLM-RoBERTa transformer is hosted on HuggingFace instead:
+#   https://huggingface.co/FarisTheCoder/xlmr-telco-sentiment
+models/xlmr_final/
 *.safetensors
 *.bin
+
+# The tiny TF-IDF baseline models and result files ARE committed so the CPU
+# pipeline (baseline + evaluation) runs turnkey without retraining.
 *.pkl
+!models/baseline_lr.pkl
+!models/baseline_svm.pkl
 
 # Editor / OS
 .idea/
