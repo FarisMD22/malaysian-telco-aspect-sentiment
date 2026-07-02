@@ -124,4 +124,4 @@ keyword-rule extractor (`labeled_main_with_aspects.csv`). The five aspects are:
 ---
 
 *Files: raw data in `data/raw/`, cleaned corpus in `data/cleaned/all_sources.csv`,
-labelled set in `data/labeled/labeled_main.csv`. Full methodology in `METHODOLOGY.md`.*
+labelled set in `data/labeled/labeled_main.csv`.*

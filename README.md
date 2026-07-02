@@ -77,10 +77,9 @@ python src/aspect_degradation.py   # per-aspect degradation + heatmaps
 | `deploy/` | Hugging Face Spaces deployment (`hf_space/`) and `DEPLOY.md` |
 | `notebooks/` | Colab notebook for GPU fine-tuning |
 | `labeling/` | Labelling rubric and inter-annotator-agreement tooling |
-| `data/` | `labeled/` (used for training/evaluation), plus `raw/` and `cleaned/` |
+| `data/` | `labeled/` (used for training/evaluation), plus `raw/` and `cleaned/`; `DATASET_SUMMARY.md` describes the dataset |
 | `models/` | Output directory for trained models and result files (generated) |
 | `UserManual.pdf` | Full user manual |
-| `METHODOLOGY.md`, `EXPERIMENT_aspect_degradation.md`, `DATASET_SUMMARY.md` | Technical documentation |
 
 ## Requirements
 

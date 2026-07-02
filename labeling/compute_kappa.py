@@ -56,7 +56,7 @@ def main() -> None:
     Path("data/labeled").mkdir(parents=True, exist_ok=True)
     report = ["# Labeling agreement (kappa.md)", "",
               "**Single annotator.** True inter-annotator Cohen's kappa requires two "
-              "independent human labelers (METHODOLOGY.md sec 3.4); that is not available here. "
+              "independent human labelers; that is not available here. "
               "Trustpilot reports a human-vs-star **proxy** kappa instead, from a **blind** "
               "re-label (the annotator did not see the star rating or any pre-label, so the "
               "agreement is genuine, not anchored), a validity check, *not* inter-annotator "

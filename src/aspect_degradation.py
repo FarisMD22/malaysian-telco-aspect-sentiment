@@ -1,5 +1,5 @@
 """
-Aspect-conditioned cross-domain degradation (see EXPERIMENT_aspect_degradation.md).
+Aspect-conditioned cross-domain degradation.
 
 A thin analysis layer over the evaluator and aspect rules; it duplicates no model logic.
 For each (model, tier, aspect) it measures accuracy on the subset of that tier's rows that

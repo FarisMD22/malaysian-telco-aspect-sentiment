@@ -33,7 +33,7 @@ SLIM_COLS = ["id", "text", "label_1", "notes"]
 
 
 def star_to_label(rating) -> str:
-    """Star auto-label rule (METHODOLOGY 3.2): 1-2 neg, 3 neu, 4-5 pos. '' if no star."""
+    """Star auto-label rule: 1-2 neg, 3 neu, 4-5 pos. '' if no star."""
     if pd.isna(rating):
         return ""
     r = int(rating)

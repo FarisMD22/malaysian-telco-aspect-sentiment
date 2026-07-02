@@ -6,7 +6,7 @@ Output: models/ablation_stemming.csv + console table
 Run:    python src/ablation_stemming.py
 
 Stemming is kept out of the transformer pipeline (XLM-R works on SentencePiece sub-words, and no
-validated Bahasa Melayu / Manglish stemmer exists; see METHODOLOGY sec 4.1). This applies Porter
+validated Bahasa Melayu / Manglish stemmer exists). This applies Porter
 stemming inside the TF-IDF + LogReg baseline only and reports stemmed vs unstemmed macro-F1 on all
 three tiers, retraining each way. Porter is an English stemmer, so it stems the BM/Manglish portion
 incorrectly; the ablation measures whether the vocabulary-shrinking benefit outweighs that cost.
@@ -66,7 +66,7 @@ def main():
         sys.exit(f"missing input: {e}")
 
     print("Porter stemming applied to the TF-IDF baseline only (English stemmer on mixed-language "
-          "text; see METHODOLOGY sec 4.1). Reporting stemmed vs unstemmed macro-F1.\n")
+          "text). Reporting stemmed vs unstemmed macro-F1.\n")
 
     y_train = train["sentiment_label"].map(LABEL_MAP).astype(int)
     rows = []
