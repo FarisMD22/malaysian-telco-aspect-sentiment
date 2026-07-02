@@ -1,16 +1,14 @@
 """
 Aspect-based sentiment analysis — keyword-rule extractor.
 
-Owner: Faris
-Aspects are LOCKED per plan. Keyword lists curated by the group in Week 5.
+Tags each review with any of five service aspects via keyword matching.
 Run: python src/aspect_sa.py
 """
 import re
 import pandas as pd
 from pathlib import Path
 
-# LOCKED aspect taxonomy. Keyword lists can be extended, but the aspect keys
-# must not change without a group discussion.
+# Aspect taxonomy: keyword lists per service aspect.
 ASPECTS = {
     "coverage": [
         "coverage", "signal", "reception", "no service", "no signal",

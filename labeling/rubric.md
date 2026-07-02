@@ -35,9 +35,9 @@
 
 Every Trustpilot and Reddit/Lowyat eval item is labeled by **two** members independently. A third member arbitrates disagreements. Track Cohen's κ per tier. Target κ ≥ 0.6.
 
-## Workflow (Rain coordinates)
+## Workflow
 
-1. Open the shared Google Sheet (link in group chat).
+1. Open the shared Google Sheet.
 2. Find rows assigned to you. Fill `your_label` using this rubric.
 3. If you disagree with a pre-label or find the text unclear, leave a note in `notes`.
-4. Done labeling? Mark your name in the "finished" tab. Rain calculates κ.
+4. Done labeling? Mark your name in the "finished" tab; κ is then calculated.

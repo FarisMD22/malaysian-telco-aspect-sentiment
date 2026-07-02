@@ -1,10 +1,9 @@
 """
 Aspect extractor — self-contained copy for the HuggingFace Space.
 
-This is a faithful copy of `src/aspect_sa.py` (the LOCKED aspect taxonomy + keyword extractor),
-minus the data-processing `main()`. It is duplicated here so the Space is self-contained and does
-not need the rest of the repo on PYTHONPATH. If the taxonomy changes in `src/aspect_sa.py`, update
-this copy too (the keys are locked, so this should be rare).
+A copy of `src/aspect_sa.py` (aspect taxonomy + keyword extractor) minus the data-processing
+`main()`, duplicated here so the Space does not need the rest of the repo on PYTHONPATH. Keep in
+sync with `src/aspect_sa.py` if the taxonomy changes.
 """
 import re
 

@@ -1,6 +1,6 @@
 # Methodology — Malaysian Telco & Broadband Sentiment Analysis
 
-This document is the technical specification of the project's approach. It complements [README.md](README.md) (overview) and [../Project-40pct-Implementation-Plan.md](../Project-40pct-Implementation-Plan.md) (full plan with calendar).
+This document is the technical specification of the project's approach. It complements [README.md](README.md).
 
 ## 1. Problem statement
 
@@ -10,12 +10,12 @@ Classify short user-generated text about Malaysian telco and broadband services 
 
 ### 2.1 Sources
 
-| Source | Genre | Role | Owner |
-|---|---|---|---|
-| Google Play Store | Star-rated app reviews | Primary training + in-domain test | Rain |
-| Trustpilot (MY telco pages) | Star-rated reviews on third-party site | Cross-platform eval | Amgad |
-| Reddit — r/malaysia, r/bolehland | Informal forum threads, no ratings | Cross-domain eval | Faris |
-| Lowyat.NET — Internet Access, Mobile Telco subforums | Informal forum threads, no ratings | Cross-domain eval (optional) | Rishima |
+| Source | Genre | Role |
+|---|---|---|
+| Google Play Store | Star-rated app reviews | Primary training + in-domain test |
+| Trustpilot (MY telco pages) | Star-rated reviews on third-party site | Cross-platform eval |
+| Reddit — r/malaysia, r/bolehland | Informal forum threads, no ratings | Cross-domain eval |
+| Lowyat.NET — Internet Access, Mobile Telco subforums | Informal forum threads, no ratings | Cross-domain eval (optional) |
 
 Play Store is the only training source. Trustpilot, Reddit, and Lowyat are evaluation-only and kept strictly held out from training. This design gives the three-tier evaluation story (in-domain → cross-platform → cross-domain).
 
@@ -31,7 +31,7 @@ Seven apps, collectively representing the Malaysian telco/broadband market:
 6. MyUnifi
 7. TIME Self Care
 
-Scraper uses `google-play-scraper` Python library, locale `en_MY`, country `MY`. Target: ≥20,000 raw reviews by 10 May. Minimum acceptable: 5,000.
+Scraper uses `google-play-scraper` Python library, locale `en_MY`, country `MY`. Target: ≥20,000 raw reviews (minimum 5,000).
 
 ### 2.3 Unified schema
 
@@ -65,7 +65,7 @@ Both platforms have star ratings. The rule is:
 
 From the auto-labeled Play Store pool, stratified-sample **360 rows** with exactly **120 per class** (120 pos / 120 neu / 120 neg). This is the `labeled_main.csv` file that drives training.
 
-Rain manually audits **50 random rows** against the rubric. If manual agreement with auto-label is below 90% (equivalent to κ < ~0.85), re-sample with tightened text-length filters.
+We manually audit **50 random rows** against the rubric. If manual agreement with auto-label is below 90% (equivalent to κ < ~0.85), re-sample with tightened text-length filters.
 
 ### 3.4 Manual double-labeling — eval sets
 
@@ -75,11 +75,11 @@ Per tier: 60 items. Per person workload across both tiers: ~60 items.
 
 ### 3.5 Optional expansion
 
-If Rain's audit on the 360-set returns κ ≥ 0.9, the training set can expand to 500–800 rows using the same auto-labeling rule — but only as a secondary robustness experiment, not as a replacement for the 360-row core. This keeps us within the rubric's data expectations while letting us study the effect of scale.
+If the audit on the 360-set returns κ ≥ 0.9, the training set can expand to 500–800 rows using the same auto-labeling rule, but only as a secondary robustness experiment, not as a replacement for the 360-row core.
 
 ## 4. Preprocessing
 
-Owner: Amgad. File: `src/preprocess.py`.
+File: `src/preprocess.py`.
 
 Transformations applied in order:
 
@@ -109,7 +109,7 @@ The guideline lists pre-processing as "cleaning, tokenization, stemming, transla
 
 ## 5. Knowledge representation
 
-Owner: Amgad. Double output:
+Double output:
 
 - **CSV** — human-readable, used for labeling and for the report's data section.
 - **HDF5** — compact binary, used as the training input for the XLM-R pipeline and for faster pandas reads during evaluation.
@@ -120,7 +120,7 @@ Both outputs are required by the rubric's Knowledge Representation criterion (5 
 
 ### 6.1 Baseline — TF-IDF + linear classifiers
 
-Owner: Amgad. File: `src/baseline.py`.
+File: `src/baseline.py`.
 
 - Vectoriser: `TfidfVectorizer(ngram_range=(1,2), min_df=3, max_features=30000)`
 - Classifiers: `LogisticRegression(max_iter=1000, class_weight='balanced')` and `LinearSVC(class_weight='balanced')`
@@ -133,7 +133,7 @@ The baseline's purpose is twofold: it is a rubric-compliant "traditional ML" opt
 
 ### 6.2 Advanced — XLM-RoBERTa fine-tune
 
-Owner: Faris. File: `src/finetune_xlmr.py`.
+File: `src/finetune_xlmr.py`.
 
 - Base model: `xlm-roberta-base` (HuggingFace)
 - Tokenizer: `XLMRobertaTokenizer`, `max_length=128`, truncation on
@@ -148,7 +148,7 @@ Why XLM-RoBERTa: it is multilingual, handles English + BM + Manglish code-switch
 
 ### 6.3 Aspect extraction — keyword-rule
 
-Owner: Faris. File: `src/aspect_sa.py`. **Aspect keys are LOCKED.**
+File: `src/aspect_sa.py`. **Aspect keys are fixed.**
 
 | Aspect | Example keywords (non-exhaustive) |
 |---|---|
@@ -160,7 +160,7 @@ Owner: Faris. File: `src/aspect_sa.py`. **Aspect keys are LOCKED.**
 
 Matching: case-insensitive word-boundary regex on cleaned text. A review can match multiple aspects.
 
-Keyword lists can be extended by group discussion but keys **cannot** change. Keywords must be disjoint across aspects — if a word could plausibly belong to two aspects, assign it to the more specific one.
+Keyword lists can be extended but keys **cannot** change. Keywords must be disjoint across aspects — if a word could plausibly belong to two aspects, assign it to the more specific one.
 
 ### 6.4 Emoji handling (advanced feature add-on)
 
@@ -168,7 +168,7 @@ Convert emoji to descriptive text via the `emoji` library (`emoji.demojize(text,
 
 ## 7. Evaluation — the three-way table
 
-Owner: Faris. File: `src/evaluate.py`.
+File: `src/evaluate.py`.
 
 Every classifier reports accuracy and macro-F1 on three evaluation sets:
 
@@ -201,7 +201,7 @@ The report **must not** describe translation as part of the main pipeline. It ap
 
 ## 9. Deployment
 
-Owner: Faris. Files: `app/app.py`, plus a HuggingFace Spaces repo at submission time.
+Files: `app/app.py`, plus a HuggingFace Spaces repo.
 
 - Framework: `gradio` (SDK: Gradio on HF Spaces)
 - Input: free-text textbox + source-type dropdown (Play Store, Trustpilot, Forum, Auto-detect)
@@ -209,7 +209,7 @@ Owner: Faris. Files: `app/app.py`, plus a HuggingFace Spaces repo at submission 
 - Model loaded: `models/xlmr_final` (fallback message if model artifact absent)
 - Launch target: `demo.launch(share=False)` locally; HF Spaces handles public URL
 
-The HF Spaces URL and a screenshot of the live app go into the report's Deployment section (worth 2 rubric marks). Deploy by Sunday 14 June to leave a full week buffer before report writing.
+The HF Spaces URL and a screenshot of the live app go into the report's Deployment section.
 
 ## 10. Reproducibility
 

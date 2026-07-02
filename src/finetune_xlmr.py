@@ -1,29 +1,19 @@
 """
 XLM-RoBERTa fine-tuning on Malaysian telco sentiment data.
 
-Owner: Faris
-Input:  data/labeled/labeled_main_train.csv   (the 960-row TRAIN split only)
+Input:  data/labeled/labeled_main_train.csv   (the 960-row train split only)
 Output: models/xlmr_final/   (config + weights + tokenizer)
 Run:    python src/finetune_xlmr.py            (full run; use a GPU)
         python src/finetune_xlmr.py --smoke     (1-step CPU sanity check)
 
-WHY train on labeled_main_train.csv (not labeled_main.csv):
-    `src/evaluate.py` scores the in-domain tier on `labeled_main_test.csv` (240 rows).
-    That file is the disjoint held-out complement of labeled_main_train.csv (0 id overlap,
-    verified). Fine-tuning on the FULL labeled_main.csv would let the model see those 240 test
-    rows -> data leakage -> an inflated, non-comparable in-domain number. We therefore train on
-    the 960-row train split ONLY, and carve a small validation slice FROM the train split for
-    early stopping / best-checkpoint selection, so the test set stays genuinely unseen until
-    evaluate.py runs. This mirrors the baseline (baseline.py trains on an 80% split of the same
-    data) so the XLM-R vs LogReg comparison is fair.
+Trains on the train split only (not the full labeled_main.csv): evaluate.py scores the
+in-domain tier on the disjoint labeled_main_test.csv, so training on the full set would leak
+those test rows and inflate the in-domain number. A small validation slice is carved from the
+train split for early stopping, keeping the test set unseen until evaluate.py runs. This mirrors
+the 80/20 split used by baseline.py so the XLM-R vs LogReg comparison is fair.
 
-Colab tip: free-tier GPU is enough. Upload data/labeled/labeled_main_train.csv, then
-    pip install -U "transformers>=4.40" datasets accelerate
-    python src/finetune_xlmr.py
-Download the resulting models/xlmr_final/ and run src/evaluate.py locally for the 3-tier table.
-
-This script is written to run on both transformers 4.x and 5.x (the Trainer `tokenizer` ->
-`processing_class` and `evaluation_strategy` -> `eval_strategy` renames are handled at runtime).
+Runs on both transformers 4.x and 5.x (the Trainer `tokenizer` -> `processing_class` and
+`evaluation_strategy` -> `eval_strategy` renames are handled at runtime).
 """
 import argparse
 import inspect

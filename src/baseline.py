@@ -1,9 +1,8 @@
 """
-Classical baseline — TF-IDF + Logistic Regression / Linear SVM.
+TF-IDF + Logistic Regression / Linear SVM baseline.
 
-Owner: Amgad
 Input:  data/labeled/labeled_main.csv
-Output: models/baseline_lr.pkl, models/baseline_svm.pkl, console metrics
+Output: models/baseline_lr.pkl, models/baseline_svm.pkl
 Run:    python src/baseline.py
 """
 import pandas as pd

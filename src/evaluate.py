@@ -1,8 +1,7 @@
 """
 Three-way evaluation: in-domain, cross-platform, cross-domain.
 
-Owner: Faris
-Produces the core comparison table for the report.
+Produces the core comparison table across the three eval tiers.
 Run: python src/evaluate.py
 """
 import pandas as pd

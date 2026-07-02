@@ -1,6 +1,6 @@
 # Experiment — Aspect-conditioned cross-domain degradation
 
-**Owner:** Faris · **Script:** `src/aspect_degradation.py` · **Feature:** advanced #5 (METHODOLOGY §12)
+**Script:** `src/aspect_degradation.py` · **Feature:** advanced #5 (METHODOLOGY §12)
 
 This experiment turns the project's headline degradation table (`src/evaluate.py`) into a
 more defensible novelty result. It is a thin **analysis layer** over the existing evaluator

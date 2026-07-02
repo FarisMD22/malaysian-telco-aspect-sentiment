@@ -1,24 +1,14 @@
 """
 Trustpilot scraper for Malaysian telco brand pages.
 
-Owner: Amgad
-Target by 10 May 2026: 300+ usable reviews across 5 brands
-Run:   python scrapers/trustpilot.py
-
+Output: data/raw/trustpilot_<brand>.csv
+Run:    python scrapers/trustpilot.py
 Setup:  pip install playwright && python -m playwright install chromium
 
-NOTE (2026-06-15, Faris shadow-build): Trustpilot is NO LONGER plain HTML.
-Every page now sits behind an AWS WAF JavaScript challenge ("Verifying your
-connection"), so plain requests + BeautifulSoup returns 403. We render with
-headless Chromium (Playwright), which clears the challenge, then read reviews
-straight out of the embedded `__NEXT_DATA__` JSON blob (cleaner + more reliable
-than HTML selectors).
-
-YIELD REALITY: only 3 Malaysian-telco brand pages carry reviews on Trustpilot —
-Digi (~177), Maxis (~22), Celcom (~12) ≈ ~211 usable. The other brands
-(CelcomDigi, Unifi, U Mobile, TM, Yes, Time, Hotlink) have empty/nonexistent
-Trustpilot pages. 211 is under the 300 comfort target but well above what the
-cross-platform eval tier needs (only 60 rows get double-labeled).
+Trustpilot pages sit behind an AWS WAF JavaScript challenge, so plain requests + BeautifulSoup
+returns 403. We render with headless Chromium (Playwright), which clears the challenge, then read
+reviews from the embedded `__NEXT_DATA__` JSON blob rather than HTML selectors. Only three brand
+pages carry Malaysian-telco reviews (Digi, Maxis, Celcom); the others have empty pages.
 """
 import json
 import time
@@ -29,7 +19,7 @@ from playwright.sync_api import sync_playwright
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
       "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
 
-# Verified live (2026-06-15) — only these three carry Malaysian-telco reviews.
+# Only these three brand pages carry Malaysian-telco reviews.
 TRUSTPILOT_PAGES = {
     "Digi":   "https://www.trustpilot.com/review/digi.com.my",
     "Maxis":  "https://www.trustpilot.com/review/maxis.com.my",

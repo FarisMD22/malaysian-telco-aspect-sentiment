@@ -1,7 +1,6 @@
 """
 Preprocessing pipeline — merge, clean, dedupe, language-detect.
 
-Owner: Amgad
 Input:  data/raw/*.csv  (output of all 4 scrapers)
 Output: data/cleaned/all_sources.csv
 Run:    python src/preprocess.py
@@ -71,7 +70,7 @@ def main():
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / "all_sources.csv"
     clean.to_csv(out_path, index=False)
-    # Also save as HDF5 for KR rubric (Amgad: cite both in report)
+    # Also save as HDF5.
     try:
         clean.to_hdf(out_dir / "all_sources.h5", key="data", mode="w")
     except Exception as e:

@@ -1,28 +1,18 @@
 """
-Translation ablation (advanced feature / pre-processing step).
+Translation ablation.
 
-Owner: Faris
 Input:  the eval tiers + models/xlmr_final
 Output: models/ablation_translation.csv, models/translation_cache.json + console table
 Run:    python src/ablation_translation.py            (forum + trustpilot tiers)
         python src/ablation_translation.py --tiers forum
 
-What it measures
-----------------
 XLM-RoBERTa is natively multilingual, so the production path feeds cleaned Bahasa Melayu / Manglish
-straight to the model. This ablation TESTS -- rather than assumes -- whether an English-pivot helps:
-we machine-translate each eval item to English (deep-translator / Google backend) and re-score the
-SAME fine-tuned model on the translated text, then compare macro-F1 to the original.
-
-It is an EVAL-TIME ablation (no retrain): we are asking "does the multilingual model need English
-input?", so feeding it translated vs native text at inference is exactly the right test. The
-hypothesis (and the design justification in REPORT_NOTES sec3) is that translation leaves accuracy
-unchanged-to-slightly-lower -- evidence that the multilingual model does not need an English pivot.
-
-Runs on the cross-tiers where code-switching actually occurs (forum = Lowyat, heaviest BM/Manglish;
-trustpilot). Translations are cached to disk so reruns are free and offline. Network failures fall
-back to the original text per item and are counted, so a flaky connection degrades gracefully
-rather than crashing.
+straight to the model. This ablation tests whether an English pivot helps: each eval item is
+machine-translated to English (deep-translator / Google backend) and the same fine-tuned model is
+re-scored on the translated text, then macro-F1 is compared to the original. It is an eval-time
+ablation (no retrain). Translations are cached to disk so reruns are free and offline; network
+failures fall back to the original text per item and are counted, so a flaky connection degrades
+gracefully rather than crashing.
 """
 import argparse
 import json
@@ -86,11 +76,11 @@ def macro(df, preds_fn, texts):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tiers", nargs="+", default=["test"], choices=list(TIERS),
-                    help="default 'test' -- the only tier with meaningful non-English content")
+                    help="default 'test', the only tier with meaningful non-English content")
     a = ap.parse_args()
 
     if not Path(XLMR_PATH, "model.safetensors").exists():
-        sys.exit(f"{XLMR_PATH}/model.safetensors not found -- train XLM-R first "
+        sys.exit(f"{XLMR_PATH}/model.safetensors not found; train XLM-R first "
                  "(notebooks/finetune_xlmr_colab.ipynb).")
 
     preds_fn = xlmr_preds_fn(XLMR_PATH)
@@ -108,7 +98,7 @@ def main():
         acc_o, f1_o = macro(df, preds_fn, orig)
         acc_t, f1_t = macro(df, preds_fn, trans)
 
-        # Meaningful subset: rows where translation ACTUALLY changed the text (i.e. genuinely
+        # Subset: rows where translation actually changed the text (i.e. genuinely
         # non-English). Identity rows (already-English) only dilute the signal.
         changed = [o.strip() != t.strip() for o, t in zip(orig, trans)]
         sub = df[pd.Series(changed, index=df.index)]

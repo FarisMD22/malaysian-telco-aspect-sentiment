@@ -1,18 +1,15 @@
 """
 Google Play Store scraper for Malaysian telco & broadband apps.
 
-Owner: Rain
-Target by 10 May 2026: 20,000+ raw reviews across 7 apps
-Run:   python scrapers/play_store.py
+Output: data/raw/play_store_<app>.csv (7 apps)
+Run:    python scrapers/play_store.py
 """
 import pandas as pd
 import time
 from pathlib import Path
 from google_play_scraper import reviews, Sort
 
-# App IDs verified working on 2026-06-13 via google_play_scraper search +
-# live review pull (all 7 return reviews for country=my). The six stale IDs
-# from the original April scaffold returned 0 reviews and were corrected.
+# App IDs for the 7 Malaysian telco/broadband self-care apps (country=my).
 TELCO_APPS = {
     "MyCelcomDigi": "com.celcomdigi.selfcare",
     "MyMaxis":       "com.maxis.mymaxis",

@@ -1,10 +1,9 @@
 """
 Local launcher for the Gradio app.
 
-The canonical app now lives in `deploy/hf_space/app.py` (the same file that is pushed to the
-HuggingFace Space — see deploy/DEPLOY.md), so there is a single source of truth. This shim just
-makes `python app/app.py` keep working from the repo root for local development; it loads the
-model from ./models/xlmr_final unless HF_MODEL_ID is set.
+The app lives in `deploy/hf_space/app.py` (the same file pushed to the HuggingFace Space).
+This shim makes `python app/app.py` work from the repo root; model resolution is handled in
+deploy/hf_space/app.py (HF_MODEL_ID, then a local ./models/xlmr_final, then the hosted model).
 """
 import importlib.util
 import sys

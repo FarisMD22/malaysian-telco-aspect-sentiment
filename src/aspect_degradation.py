@@ -1,19 +1,11 @@
 """
-Aspect-conditioned cross-domain degradation.
+Aspect-conditioned cross-domain degradation (see EXPERIMENT_aspect_degradation.md).
 
-Owner: Faris
-Advanced feature #5 / flagship novelty (see METHODOLOGY.md sec 12, EXPERIMENT_aspect_degradation.md).
-
-This is a thin ANALYSIS LAYER over the existing evaluator and aspect rules -- it
-duplicates no model logic. For each (model, tier, aspect) it measures accuracy on
-the subset of that tier's rows that mention the aspect, so we can see *whether* the
-in-domain -> cross-platform -> cross-domain degradation is uniform across service
-aspects, or whether some aspects (hypothesised: coverage/speed) transfer while
-others (hypothesised: app_usability) collapse. The script produces the evidence; it
-does not pre-assert the outcome.
-
-Runs gracefully when models or eval tiers are missing: it always writes a valid
-(header-at-minimum) CSV and never crashes on absent artefacts.
+A thin analysis layer over the evaluator and aspect rules; it duplicates no model logic.
+For each (model, tier, aspect) it measures accuracy on the subset of that tier's rows that
+mention the aspect, showing whether the in-domain -> cross-platform -> cross-domain degradation
+is uniform across aspects or whether some transfer while others collapse. Always writes a valid
+(header-at-minimum) CSV and does not crash when models or eval tiers are missing.
 
 Run: python src/aspect_degradation.py   (or: python -m src.aspect_degradation)
 """
@@ -81,8 +73,8 @@ def per_aspect_scores(df: pd.DataFrame, y_pred, tier: str, model: str) -> list[d
     y_pred = pd.Series(y_pred, index=df.index).astype(int).to_numpy()
     rows = []
 
-    # __overall__: accuracy + macro-F1. macro-F1 mirrors evaluate.py EXACTLY
-    # (average="macro", no labels=/zero_division=) so the two scripts reconcile.
+    # __overall__ row: accuracy + macro-F1. macro-F1 uses average="macro" to match
+    # evaluate.py so the two scripts reconcile.
     n = len(df)
     correct = int((y_true == y_pred).sum())
     acc = accuracy_score(y_true, y_pred) if n else float("nan")
@@ -94,7 +86,7 @@ def per_aspect_scores(df: pd.DataFrame, y_pred, tier: str, model: str) -> list[d
         "macro_f1": macro_f1, "low_support": n < MIN_SUPPORT,
     })
 
-    # Per-aspect slices. Subsets overlap (a row may match several aspects) -- intended.
+    # Per-aspect slices; subsets intentionally overlap (a row may match several aspects).
     # macro_f1 is NaN here: small slices rarely contain all three classes.
     for aspect in ASPECTS:
         mask = df["aspects"].apply(lambda a: aspect in a).to_numpy()
@@ -126,7 +118,7 @@ def make_heatmap(df_results: pd.DataFrame, model_name: str, out_path: str) -> No
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
         import numpy as np
-    except Exception as e:  # noqa: BLE001 -- matplotlib is an optional deliverable dep
+    except Exception as e:  # matplotlib is an optional dependency
         print(f"  [heatmap skipped for {model_name}] matplotlib unavailable: {e}")
         return
 
@@ -147,7 +139,7 @@ def make_heatmap(df_results: pd.DataFrame, model_name: str, out_path: str) -> No
             r = cell.iloc[0]
             if r["low_support"] or pd.isna(r["accuracy"]):
                 # Leave acc[i, j] as NaN so the cell is masked and renders grey
-                # (set_bad below) -- low-support cells must NOT carry a colour.
+                # (set_bad below); low-support cells should not carry a colour.
                 note[i][j] = f"n/a\nn={int(r['n'])}"
             else:
                 acc[i, j] = r["accuracy"]
@@ -195,7 +187,7 @@ def main() -> None:
     if Path(XLMR_PATH).exists():
         try:
             models.append(("XLM-R", xlmr_preds_fn(XLMR_PATH)))
-        except Exception as e:  # noqa: BLE001 -- transformers/model load is best-effort
+        except Exception as e:  # transformers/model load is best-effort
             print(f"  [skip model] XLM-R ({XLMR_PATH}): {e}")
     else:
         print(f"  [skip model] XLM-R ({XLMR_PATH}): not found")
@@ -212,7 +204,7 @@ def main() -> None:
     out_df = pd.DataFrame(results, columns=CSV_COLS)
     out_df.to_csv(OUT_CSV, index=False)
     if out_df.empty:
-        print(f"\nNo (model x tier) pairs available -- wrote header-only {OUT_CSV}.")
+        print(f"\nNo (model x tier) pairs available; wrote header-only {OUT_CSV}.")
         print("Train models/baseline_lr.pkl and/or add eval sets, then rerun.")
         return
 

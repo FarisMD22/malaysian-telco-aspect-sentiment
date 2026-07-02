@@ -1,24 +1,16 @@
 """
-Lowyat.NET forum scraper — CROSS-DOMAIN eval source.
+Lowyat.NET forum scraper — cross-domain eval source.
 
-Owner: Rishima (original stub) · Rebuilt 2026-06-16 by Faris as Reddit insurance.
-Target: ~1,000 forum posts across Malaysian telco/broadband sub-forums.
-Run:   python scrapers/lowyat.py
+Output: data/raw/lowyat.csv
+Run:    python scrapers/lowyat.py
 
-WHY THIS EXISTS: Reddit funnelled app registration into Devvit (on-platform apps),
-which gives no OAuth scraping credentials. Lowyat.NET is the cross-domain tier
-instead — Malaysian users discussing the same telco/broadband brands in a forum
-register (long-form, code-switched), which is exactly the domain shift we want to
-measure against the Play Store training data.
-
-ACCESS NOTE: Lowyat sits behind Cloudflare but serves plain 200 HTML to a normal
-browser User-Agent (no JS challenge as of 2026-06-16), so requests + BeautifulSoup
-is enough — no headless browser needed. Posts live in `div.postcolor`; quoted text
-is wrapped in `div.quotetop` / `div.quotemain` and is stripped so we keep only each
-author's own words. Threads paginate via `?st=<offset>` (20 posts/page).
-
-Forum posts have no star rating, so `rating` is None (same as Reddit) — sentiment
-for the eval sample comes from the manual labeling sprint, not auto-labels.
+Lowyat.NET provides the cross-domain tier: Malaysian users discussing the same telco/broadband
+brands in a long-form, code-switched forum register, which is the domain shift measured against
+the Play Store training data. Lowyat sits behind Cloudflare but serves plain 200 HTML to a normal
+browser User-Agent, so requests + BeautifulSoup is enough. Posts live in `div.postcolor`; quoted
+text (`div.quotetop` / `div.quotemain`) is stripped so we keep only each author's own words.
+Threads paginate via `?st=<offset>` (20 posts/page). Forum posts have no star rating, so `rating`
+is None; sentiment for the eval sample comes from the manual labeling sprint.
 """
 import re
 import time
@@ -34,7 +26,7 @@ HEADERS = {
 }
 BASE = "https://forum.lowyat.net"
 
-# Telco/broadband sub-forums (verified live 2026-06-16).
+# Telco/broadband sub-forums.
 SUBFORUMS = ["TelcoTalk", "Maxis", "NetworksandBroadband", "InternetRelated"]
 
 UNIFIED_COLS = ["id", "text", "rating", "date", "source", "app"]

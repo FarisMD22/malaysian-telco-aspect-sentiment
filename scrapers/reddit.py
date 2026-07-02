@@ -1,9 +1,8 @@
 """
 Reddit scraper for Malaysian telco & broadband discussions.
 
-Owner: Faris
-Target by 10 May 2026: 1,000+ unique posts + comments
-Run:   python scrapers/reddit.py
+Output: data/raw/reddit.csv
+Run:    python scrapers/reddit.py
 
 Setup before running:
 1. Register a Reddit app: https://www.reddit.com/prefs/apps (type: "script")

@@ -1,21 +1,15 @@
 """
-Stemming ablation (satisfies the guideline's "stemming" pre-processing step).
+Stemming ablation.
 
-Owner: Amgad / Faris
 Input:  data/labeled/labeled_main_train.csv + the three eval tiers
 Output: models/ablation_stemming.csv + console table
 Run:    python src/ablation_stemming.py
 
-What it measures
-----------------
-Stemming is deliberately kept OUT of the transformer pipeline (XLM-R works on SentencePiece
-sub-words, and no validated Bahasa Melayu / Manglish stemmer exists -- see METHODOLOGY sec4.1).
-For rubric coverage we apply Porter stemming inside the cheap TF-IDF + LogReg baseline ONLY and
-report stemmed vs unstemmed macro-F1 on all three tiers, retraining the baseline each way.
-
-Honest caveat (printed at runtime): Porter is an English stemmer, so on the BM/Manglish portion of
-the corpus it stems incorrectly. The point of the ablation is precisely to show whether, on this
-mixed-language data, the vocabulary-shrinking benefit outweighs that cost -- not to assume it.
+Stemming is kept out of the transformer pipeline (XLM-R works on SentencePiece sub-words, and no
+validated Bahasa Melayu / Manglish stemmer exists; see METHODOLOGY sec 4.1). This applies Porter
+stemming inside the TF-IDF + LogReg baseline only and reports stemmed vs unstemmed macro-F1 on all
+three tiers, retraining each way. Porter is an English stemmer, so it stems the BM/Manglish portion
+incorrectly; the ablation measures whether the vocabulary-shrinking benefit outweighs that cost.
 """
 import re
 import sys
@@ -38,7 +32,7 @@ TIERS = {
 MODES = ["unstemmed", "stemmed"]
 _TOKEN = re.compile(r"\b\w\w+\b")            # mirrors TfidfVectorizer's default token pattern
 _stemmer = PorterStemmer()
-_cache: dict[str, str] = {}                  # stem cache -- Porter is the loop's hot spot
+_cache: dict[str, str] = {}                  # stem cache; Porter is the loop's hot spot
 
 
 def stem_word(w: str) -> str:
@@ -72,7 +66,7 @@ def main():
         sys.exit(f"missing input: {e}")
 
     print("Porter stemming applied to the TF-IDF baseline only (English stemmer on mixed-language "
-          "text -- see METHODOLOGY sec4.1). Reporting stemmed vs unstemmed macro-F1.\n")
+          "text; see METHODOLOGY sec 4.1). Reporting stemmed vs unstemmed macro-F1.\n")
 
     y_train = train["sentiment_label"].map(LABEL_MAP).astype(int)
     rows = []

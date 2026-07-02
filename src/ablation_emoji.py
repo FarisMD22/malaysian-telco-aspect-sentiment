@@ -1,27 +1,19 @@
 """
-Emoji-handling ablation (advanced feature #3).
+Emoji-handling ablation.
 
-Owner: Faris
 Input:  data/labeled/labeled_main_train.csv + the three eval tiers
 Output: models/ablation_emoji.csv + console table
 Run:    python src/ablation_emoji.py
 
-What it measures
-----------------
-`src/preprocess.py` does NOT demojize -- raw emoji survive into `cleaned_text` and reach both
-models. This ablation quantifies what an emoji-handling step would buy by RE-TRAINING the cheap
-TF-IDF + LogReg baseline under three treatments and scoring each on the three eval tiers:
-  * raw      -- emoji left as-is (the current pipeline)
-  * demojize -- emoji -> their description words (fire, smiling_face...) via `emoji.demojize`
-  * strip    -- emoji removed entirely
+preprocess.py does not demojize, so raw emoji reach both models. This retrains the TF-IDF +
+LogReg baseline under three emoji treatments and scores each on the three eval tiers:
+  * raw      - emoji left as-is (the current pipeline)
+  * demojize - emoji mapped to their description words via emoji.demojize
+  * strip    - emoji removed entirely
 
-We ablate on the baseline (not XLM-R) because it retrains in seconds; an XLM-R variant would need
-a Colab retrain per treatment for very little expected signal -- see the prevalence note below.
-
-Honest scope note (printed at runtime): emoji are sparse and concentrated in app-store text
-(~8% in-domain train, ~7% in-domain test) and nearly absent cross-tier (Trustpilot ~3%, forum 0%),
-so any measurable delta lives almost entirely in the in-domain tier. A near-zero cross-tier delta
-is an expected, reportable result, not a null finding to hide.
+The baseline is used (not XLM-R) because it retrains in seconds. Emoji are sparse and concentrated
+in app-store text (~8% in-domain, ~3% Trustpilot, 0% forum), so any measurable delta lives almost
+entirely in the in-domain tier; a near-zero cross-tier delta is an expected result.
 """
 import sys
 from pathlib import Path
@@ -54,7 +46,7 @@ def transform(series: pd.Series, mode: str) -> pd.Series:
     if mode == "strip":
         return s.apply(lambda x: emoji.replace_emoji(x, ""))
     if mode == "demojize":
-        # description words become separate tokens (drop the :_: scaffolding TF-IDF would fuse)
+        # description words become separate tokens (drop the :_: delimiters)
         return s.apply(lambda x: emoji.demojize(x, delimiters=(" ", " ")).replace("_", " "))
     raise ValueError(mode)
 
@@ -75,7 +67,7 @@ def main():
     except FileNotFoundError as e:
         sys.exit(f"missing input: {e}")
 
-    # Prevalence report (the honest-scope context).
+    # Emoji prevalence per tier.
     print("emoji prevalence (rows containing >=1 emoji):")
     print(f"  {'train':28s} {train['cleaned_text'].apply(has_emoji).mean()*100:5.1f}%  (n={len(train)})")
     for name, df in tiers.items():
