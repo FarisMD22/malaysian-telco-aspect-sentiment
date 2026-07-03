@@ -1,0 +1,37 @@
+model,tier,aspect,n,accuracy,ci_low,ci_high,macro_f1,low_support
+LogReg,Play Store (in-domain),__overall__,240,0.5916666666666667,0.5285108645804661,0.6519341456228789,0.594235190097259,False
+LogReg,Play Store (in-domain),coverage,12,0.5,0.2537781703934222,0.7462218296065778,,False
+LogReg,Play Store (in-domain),speed,37,0.5675675675675675,0.4091390633420072,0.7132851315964869,,False
+LogReg,Play Store (in-domain),billing,30,0.5,0.33153851227173764,0.6684614877282624,,False
+LogReg,Play Store (in-domain),customer_support,9,0.6666666666666666,0.35419734749908977,0.879418401317257,,False
+LogReg,Play Store (in-domain),app_usability,81,0.5679012345679012,0.4593724052942849,0.6702809722940679,,False
+LogReg,Trustpilot (cross-platform),__overall__,60,0.7,0.5749105303360957,0.801019897472731,0.42753036437246966,False
+LogReg,Trustpilot (cross-platform),coverage,8,0.75,0.40926987910258916,0.9285223111419724,,False
+LogReg,Trustpilot (cross-platform),speed,8,0.25,0.07147768885802763,0.5907301208974108,,False
+LogReg,Trustpilot (cross-platform),billing,19,0.6842105263157895,0.4601001017506463,0.846358289955714,,False
+LogReg,Trustpilot (cross-platform),customer_support,26,0.7692307692307693,0.5794807424804321,0.8896630031632332,,False
+LogReg,Trustpilot (cross-platform),app_usability,6,1.0,0.6096569663469354,0.9999999999999999,,True
+LogReg,Reddit/Lowyat (cross-domain),__overall__,60,0.4666666666666667,0.34627701540988,0.5910679132886489,0.33331314477217205,False
+LogReg,Reddit/Lowyat (cross-domain),coverage,10,0.7,0.39677321997956516,0.892210712513788,,False
+LogReg,Reddit/Lowyat (cross-domain),speed,1,1.0,0.20654329147389294,1.0,,True
+LogReg,Reddit/Lowyat (cross-domain),billing,19,0.3684210526315789,0.1914927237627384,0.5896084250184328,,False
+LogReg,Reddit/Lowyat (cross-domain),customer_support,0,,,,,True
+LogReg,Reddit/Lowyat (cross-domain),app_usability,1,1.0,0.20654329147389294,1.0,,True
+XLM-R,Play Store (in-domain),__overall__,240,0.6666666666666666,0.6048134560923747,0.72326838064098,0.6607068775359459,False
+XLM-R,Play Store (in-domain),coverage,12,0.75,0.46768966087934005,0.9110599603710386,,False
+XLM-R,Play Store (in-domain),speed,37,0.5945945945945946,0.4348568313132931,0.7365370416005986,,False
+XLM-R,Play Store (in-domain),billing,30,0.6333333333333333,0.45513246433604937,0.7812629779598231,,False
+XLM-R,Play Store (in-domain),customer_support,9,1.0,0.7008472464490407,1.0,,False
+XLM-R,Play Store (in-domain),app_usability,81,0.7283950617283951,0.6228437147614009,0.8132631007630587,,False
+XLM-R,Trustpilot (cross-platform),__overall__,60,0.7333333333333333,0.6099104639810865,0.8286750351292115,0.5675012272950417,False
+XLM-R,Trustpilot (cross-platform),coverage,8,1.0,0.6755843804891231,1.0,,False
+XLM-R,Trustpilot (cross-platform),speed,8,0.75,0.40926987910258916,0.9285223111419724,,False
+XLM-R,Trustpilot (cross-platform),billing,19,0.6842105263157895,0.4601001017506463,0.846358289955714,,False
+XLM-R,Trustpilot (cross-platform),customer_support,26,0.7692307692307693,0.5794807424804321,0.8896630031632332,,False
+XLM-R,Trustpilot (cross-platform),app_usability,6,0.8333333333333334,0.43649056343635395,0.9699474141282697,,True
+XLM-R,Reddit/Lowyat (cross-domain),__overall__,60,0.6333333333333333,0.5068276736679673,0.7437926115379172,0.5502842377260981,False
+XLM-R,Reddit/Lowyat (cross-domain),coverage,10,0.8,0.49015684672072335,0.9433190520193067,,False
+XLM-R,Reddit/Lowyat (cross-domain),speed,1,1.0,0.20654329147389294,1.0,,True
+XLM-R,Reddit/Lowyat (cross-domain),billing,19,0.7894736842105263,0.5666528575973392,0.9149246150840843,,False
+XLM-R,Reddit/Lowyat (cross-domain),customer_support,0,,,,,True
+XLM-R,Reddit/Lowyat (cross-domain),app_usability,1,1.0,0.20654329147389294,1.0,,True

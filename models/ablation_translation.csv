@@ -1,0 +1,2 @@
+tier,n,n_translation_failed,macro_f1_original,macro_f1_translated,macro_f1_delta,n_nonenglish_translated,macro_f1_original_sub,macro_f1_translated_sub,macro_f1_delta_sub
+Play Store (in-domain),240,0,0.6607068775359459,0.6414721945760732,-0.01923468295987274,54,0.510869248477431,0.42905052264808363,-0.08181872582934735

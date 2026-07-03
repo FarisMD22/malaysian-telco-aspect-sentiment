@@ -2,3 +2,6 @@ set,model,accuracy,macro_f1
 Play Store (in-domain),LogReg,0.5916666666666667,0.594235190097259
 Trustpilot (cross-platform),LogReg,0.7,0.42753036437246966
 Reddit/Lowyat (cross-domain),LogReg,0.4666666666666667,0.33331314477217205
+Play Store (in-domain),XLM-R,0.6666666666666666,0.6607068775359459
+Trustpilot (cross-platform),XLM-R,0.7333333333333333,0.5675012272950417
+Reddit/Lowyat (cross-domain),XLM-R,0.6333333333333333,0.5502842377260981

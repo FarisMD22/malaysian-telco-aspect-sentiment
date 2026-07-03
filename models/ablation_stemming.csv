@@ -1,0 +1,7 @@
+mode,tier,accuracy,macro_f1
+unstemmed,Play Store (in-domain),0.5916666666666667,0.594235190097259
+unstemmed,Trustpilot (cross-platform),0.7,0.42753036437246966
+unstemmed,Reddit/Lowyat (cross-domain),0.4666666666666667,0.33331314477217205
+stemmed,Play Store (in-domain),0.5875,0.5885167464114832
+stemmed,Trustpilot (cross-platform),0.7666666666666667,0.4434084434084434
+stemmed,Reddit/Lowyat (cross-domain),0.45,0.3238539238539239

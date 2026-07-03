@@ -1,0 +1,10 @@
+mode,tier,accuracy,macro_f1
+raw,Play Store (in-domain),0.5916666666666667,0.594235190097259
+raw,Trustpilot (cross-platform),0.7,0.42753036437246966
+raw,Reddit/Lowyat (cross-domain),0.4666666666666667,0.33331314477217205
+demojize,Play Store (in-domain),0.5958333333333333,0.5973420479302832
+demojize,Trustpilot (cross-platform),0.7333333333333333,0.43563309542690987
+demojize,Reddit/Lowyat (cross-domain),0.4666666666666667,0.35353535353535354
+strip,Play Store (in-domain),0.5916666666666667,0.594235190097259
+strip,Trustpilot (cross-platform),0.7,0.42753036437246966
+strip,Reddit/Lowyat (cross-domain),0.4666666666666667,0.33331314477217205
